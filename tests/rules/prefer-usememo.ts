@@ -38,7 +38,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect async
+        // useEffect with async function
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -56,7 +56,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect promise
+        // useEffect with promise
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -70,7 +70,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect callback
+        // useEffect with callback
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -84,7 +84,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect additional state
+        // useEffect with additional state
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -100,7 +100,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect teardown
+        // useEffect with teardown
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -115,7 +115,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect empty dependencies
+        // useEffect with empty dependencies
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -129,7 +129,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect undefined dependencies
+        // useEffect without dependencies
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -144,7 +144,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
   ],
   invalid: [
     fromFixture(stripIndent`
-      // useEffect argument
+      // useEffect with call as argument
       import React, { useEffect, useState } from "react";
       import { process } from "./process";
       export function Component({ data }) {
@@ -157,7 +157,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
       };
     `),
     fromFixture(stripIndent`
-      // useEffect variable
+      // useEffect with variable as argument
       import React, { useEffect, useState } from "react";
       import { process } from "./process";
       export function Component({ data }) {
@@ -171,7 +171,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
       };
     `),
     fromFixture(stripIndent`
-      // useEffect loop
+      // useEffect with a loop
       import React, { useEffect, useState } from "react";
       import { process } from "./process";
       export function Component({ data }) {

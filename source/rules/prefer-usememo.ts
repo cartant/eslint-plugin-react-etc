@@ -31,6 +31,13 @@ const rule = ruleCreator({
   },
   name: "prefer-usememo",
   create: (context) => {
+    // This rule uses a simplistic heuristic to determine whether or not a
+    // useEffect hook should be replaced with a useMemo hook. A failure will be
+    // effected if the useEffect hook:
+    // - makes a clearly synchronous call to a single useState setter;
+    // - has some dependencies;
+    // - does not return a teardown.
+
     type FunctionState = {
       hasReturn: boolean;
       node: es.Node;
