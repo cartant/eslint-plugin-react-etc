@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "lib": ["esnext"],
+      "jsx": "react",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "skipLibCheck": true,
+      "target": "esnext"
+    },
+    "include": ["modules/*.ts"],
+    "files": ["file.tsx"]
+  }
+  
