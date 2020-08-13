@@ -38,7 +38,7 @@ const rule = ruleCreator({
       setterDeclarations: Set<string>;
     };
     const functionStates: FunctionState[] = [];
-    const effects = new WeakMap<es.Node, es.Node>();
+    const effectFunctionsToCallees = new WeakMap<es.Node, es.Node>();
 
     function enterFunction(
       node:
@@ -56,16 +56,17 @@ const rule = ruleCreator({
 
     function exitFunction() {
       const top = functionStates.pop();
-      if (!effects.has(top.node)) {
+      if (!effectFunctionsToCallees.has(top.node)) {
         return;
       }
       if (top.hasReturn) {
         return;
       }
       if (top.setterCalls.size === 1) {
+        const callee = effectFunctionsToCallees.get(top.node);
         context.report({
           messageId: "forbidden",
-          node: effects.get(top.node),
+          node: callee,
         });
       }
     }
@@ -95,7 +96,7 @@ const rule = ruleCreator({
       if (dependencies.elements.length === 0) {
         return;
       }
-      effects.set(callback, node.callee);
+      effectFunctionsToCallees.set(callback, node.callee);
     }
 
     function enterUseState(node: es.CallExpression) {
@@ -120,21 +121,22 @@ const rule = ruleCreator({
     }
 
     function enterCallExpression(node: es.CallExpression) {
-      if (!isIdentifier(node.callee)) {
+      const { callee } = node;
+      if (!isIdentifier(callee)) {
         return;
       }
-      const { name } = node.callee;
       const { length, [length - 1]: top } = functionStates;
       if (!top) {
         return;
       }
-      if (!effects.has(top.node)) {
+      if (!effectFunctionsToCallees.has(top.node)) {
         return;
       }
       const { [length - 2]: parent } = functionStates;
       if (!parent) {
         return;
       }
+      const { name } = callee;
       if (parent.setterDeclarations.has(name)) {
         top.setterCalls.add(name);
       }
