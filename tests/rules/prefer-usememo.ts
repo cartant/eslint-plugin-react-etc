@@ -38,7 +38,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect with async function
+        // useEffect with setter in async function
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -56,7 +56,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect with promise
+        // useEffect with setter in promise
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -70,7 +70,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect with callback
+        // useEffect with callback setter
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -84,7 +84,7 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
     },
     {
       code: stripIndent`
-        // useEffect with additional state
+        // useEffect with additional setter
         import React, { useEffect, useState } from "react";
         import { process } from "./process";
         export function Component({ data }) {
@@ -137,6 +137,37 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
           useEffect(() => {
             setProcessed(process());
           });
+          return <span>{processed}</span>;
+        };
+      `,
+    },
+    {
+      code: stripIndent`
+        // useEffect with conditional setter
+        import React, { useEffect, useState } from "react";
+        import { process } from "./process";
+        export function Component({ data, flag }) {
+          const [processed, setProcessed] = useState();
+          useEffect(() => {
+            if (flag) {
+              setProcessed(process(data));
+            }
+          }, [data, flag]);
+          return <span>{processed}</span>;
+        };
+      `,
+    },
+    {
+      code: stripIndent`
+        // useEffect with sync and async setters
+        import React, { useEffect, useState } from "react";
+        import { process } from "./process";
+        export function Component({ data }) {
+          const [processed, setProcessed] = useState();
+          useEffect(() => {
+            process(data, setProcessed);
+            setProcessed(null);
+          }, [data]);
           return <span>{processed}</span>;
         };
       `,
@@ -198,6 +229,19 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
           setProcessed(process(data));
         }, [data]);
         return <span>{processed}</span>;
+      };
+    `),
+    fromFixture(stripIndent`
+      // useEffect within a hook
+      import { useEffect, useState } from "react";
+      import { process } from "./process";
+      export function useHook({ data }) {
+        const [processed, setProcessed] = useState();
+        useEffect(() => {
+        ~~~~~~~~~ [forbidden]
+          setProcessed(process(data));
+        }, [data]);
+        return processed;
       };
     `),
   ],

@@ -6,6 +6,7 @@
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import {
   findParent,
+  getParent,
   isArrayExpression,
   isArrayPattern,
   isArrowFunctionExpression,
@@ -34,18 +35,36 @@ const rule = ruleCreator({
     // This rule uses a simplistic heuristic to determine whether or not a
     // useEffect hook should be replaced with a useMemo hook. A failure will be
     // effected if the useEffect hook:
-    // - makes a clearly synchronous call to a single useState setter;
+    // - makes a single, clearly-synchronous, unconditional call to a single
+    //   useState setter;
+    // - does not reference or call additional useState setters;
     // - has some dependencies;
     // - does not return a teardown.
 
-    type FunctionState = {
+    type EffectScope = {
+      calledSetterCount: number;
+      callee: es.Node;
+      node: es.Node;
+      referencedSetterCount: number;
+    };
+    type FunctionScope = {
       hasReturn: boolean;
       node: es.Node;
-      setterCalls: Set<string>;
-      setterDeclarations: Set<string>;
     };
-    const functionStates: FunctionState[] = [];
+    type StateScope = {
+      node: es.Node;
+      setterNames: Set<string>;
+    };
+
     const effectFunctionsToCallees = new WeakMap<es.Node, es.Node>();
+    const effectScopes: EffectScope[] = [];
+    const functionScopes: FunctionScope[] = [];
+    const stateScopes: StateScope[] = [];
+
+    function currentScope<Scope>(scopes: Scope[]): Scope | undefined {
+      const { length, [length - 1]: scope } = scopes;
+      return scope;
+    }
 
     function enterFunction(
       node:
@@ -53,24 +72,55 @@ const rule = ruleCreator({
         | es.FunctionDeclaration
         | es.FunctionExpression
     ) {
-      functionStates.push({
+      const functionScope = {
         hasReturn: false,
         node,
-        setterCalls: new Set<string>(),
-        setterDeclarations: new Set<string>(),
-      });
+      };
+      functionScopes.push(functionScope);
+
+      const effectCallee = effectFunctionsToCallees.get(node);
+      if (effectCallee) {
+        const effectScope = {
+          calledSetterCount: 0,
+          callee: effectCallee,
+          node,
+          referencedSetterCount: 0,
+        };
+        effectScopes.push(effectScope);
+      }
     }
 
-    function exitFunction() {
-      const top = functionStates.pop();
-      if (!effectFunctionsToCallees.has(top.node)) {
-        return;
+    function exitFunction(
+      node:
+        | es.ArrowFunctionExpression
+        | es.FunctionDeclaration
+        | es.FunctionExpression
+    ) {
+      const functionScope = functionScopes.pop();
+
+      const stateScope = currentScope(stateScopes);
+      if (stateScope?.node === node) {
+        stateScopes.pop();
       }
-      if (top.hasReturn) {
-        return;
-      }
-      if (top.setterCalls.size === 1) {
-        const callee = effectFunctionsToCallees.get(top.node);
+
+      const effectScope = currentScope(effectScopes);
+      if (effectScope?.node === node) {
+        effectScopes.pop();
+        const {
+          calledSetterCount,
+          callee,
+          referencedSetterCount,
+        } = effectScope;
+        const { hasReturn } = functionScope;
+        if (hasReturn) {
+          return;
+        }
+        if (calledSetterCount !== 1) {
+          return;
+        }
+        if (referencedSetterCount !== 1) {
+          return;
+        }
         context.report({
           messageId: "forbidden",
           node: callee,
@@ -79,8 +129,8 @@ const rule = ruleCreator({
     }
 
     function enterReturnStatement() {
-      const { length, [length - 1]: top } = functionStates;
-      top.hasReturn = true;
+      const functionScope = currentScope(functionScopes);
+      functionScope.hasReturn = true;
     }
 
     function enterUseEffect(node: es.CallExpression) {
@@ -120,11 +170,25 @@ const rule = ruleCreator({
       if (!isIdentifier(setter)) {
         return;
       }
-      const { length, [length - 1]: top } = functionStates;
-      if (!top) {
+      const functionScope = currentScope(functionScopes);
+      if (!functionScope) {
         return;
       }
-      top.setterDeclarations.add(setter.name);
+      let stateScope = currentScope(stateScopes);
+      if (!stateScope) {
+        stateScope = {
+          node: functionScope.node,
+          setterNames: new Set<string>(),
+        };
+        stateScopes.push(stateScope);
+      } else if (stateScope.node !== functionScope.node) {
+        stateScope = {
+          node: functionScope.node,
+          setterNames: new Set<string>(stateScope.setterNames),
+        };
+        stateScopes.push(stateScope);
+      }
+      stateScope.setterNames.add(setter.name);
     }
 
     function enterCallExpression(node: es.CallExpression) {
@@ -132,20 +196,37 @@ const rule = ruleCreator({
       if (!isIdentifier(callee)) {
         return;
       }
-      const { length, [length - 1]: top } = functionStates;
-      if (!top) {
+      const stateScope = currentScope(stateScopes);
+      if (!stateScope) {
         return;
       }
-      if (!effectFunctionsToCallees.has(top.node)) {
+      const effectScope = currentScope(effectScopes);
+      if (!effectScope) {
         return;
       }
-      const { [length - 2]: parent } = functionStates;
-      if (!parent) {
+      // TODO:
+      const parent = getParent(getParent(node));
+      if (parent !== (effectScope.node as any).body) {
         return;
       }
       const { name } = callee;
-      if (parent.setterDeclarations.has(name)) {
-        top.setterCalls.add(name);
+      if (stateScope.setterNames.has(name)) {
+        ++effectScope.calledSetterCount;
+      }
+    }
+
+    function enterIdentifier(node: es.Identifier) {
+      const stateScope = currentScope(stateScopes);
+      if (!stateScope) {
+        return;
+      }
+      const effectScope = currentScope(effectScopes);
+      if (!effectScope) {
+        return;
+      }
+      const { name } = node;
+      if (stateScope.setterNames.has(name)) {
+        ++effectScope.referencedSetterCount;
       }
     }
 
@@ -158,6 +239,7 @@ const rule = ruleCreator({
       "CallExpression[callee.name='useState']": enterUseState,
       "CallExpression[callee.property.name='useState']": enterUseState,
       CallExpression: enterCallExpression,
+      Identifier: enterIdentifier,
     };
   },
 });
