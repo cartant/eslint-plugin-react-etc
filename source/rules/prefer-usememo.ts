@@ -6,7 +6,6 @@
 import { TSESTree as es } from "@typescript-eslint/experimental-utils";
 import {
   findParent,
-  getParent,
   isArrayExpression,
   isArrayPattern,
   isArrowFunctionExpression,
@@ -42,6 +41,7 @@ const rule = ruleCreator({
     // - does not return a teardown.
 
     type EffectScope = {
+      body: es.Node;
       calledSetterCount: number;
       callee: es.Node;
       node: es.Node;
@@ -81,6 +81,7 @@ const rule = ruleCreator({
       const effectCallee = effectFunctionsToCallees.get(node);
       if (effectCallee) {
         const effectScope = {
+          body: node.body,
           calledSetterCount: 0,
           callee: effectCallee,
           node,
@@ -204,9 +205,20 @@ const rule = ruleCreator({
       if (!effectScope) {
         return;
       }
-      // TODO:
-      const parent = getParent(getParent(node));
-      if (parent !== (effectScope.node as any).body) {
+      // Find the parent block statement - if there is one - but bail if there
+      // are intermediate conditional statements, etc.
+      const block = findParent(node, (type) => {
+        switch (type) {
+          case "ExpressionStatement":
+            return "continue";
+          case "BlockStatement":
+            return "return";
+          default:
+            return "break";
+        }
+      });
+      const { body } = effectScope;
+      if (node !== body && block !== body) {
         return;
       }
       const { name } = callee;

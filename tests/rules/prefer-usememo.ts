@@ -188,6 +188,30 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
       };
     `),
     fromFixture(stripIndent`
+      // useEffect with block-less arrow function
+      import React, { useEffect, useState } from "react";
+      import { process } from "./process";
+      export function Component({ data }) {
+        const [processed, setProcessed] = useState();
+        useEffect(() => setProcessed(process(data)), [data]);
+        ~~~~~~~~~ [forbidden]
+        return <span>{processed}</span>;
+      };
+    `),
+    fromFixture(stripIndent`
+      // useEffect with non-arrow function
+      import React, { useEffect, useState } from "react";
+      import { process } from "./process";
+      export function Component({ data }) {
+        const [processed, setProcessed] = useState();
+        useEffect(function () {
+        ~~~~~~~~~ [forbidden]
+          setProcessed(process(data));
+        }, [data]);
+        return <span>{processed}</span>;
+      };
+    `),
+    fromFixture(stripIndent`
       // useEffect with variable as argument
       import React, { useEffect, useState } from "react";
       import { process } from "./process";
