@@ -8,7 +8,6 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitHelpers": true,
-    "noImplicitAny": true,
     "outDir": "build",
     "paths": {
       "esquery": ["@types/esquery"]
@@ -16,7 +15,6 @@
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": false,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "esnext"
   },
   "exclude": [],
