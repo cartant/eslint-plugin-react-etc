@@ -19,12 +19,12 @@ const rule = ruleCreator({
   meta: {
     docs: {
       category: "Best Practices",
-      description: "Forbids useEffect when useMemo should suffice.",
+      description: "Forbids `useEffect` when `useMemo` should suffice.",
       recommended: false,
     },
     fixable: null,
     messages: {
-      forbidden: "useEffect is forbidden here; useMemo should suffice.",
+      forbidden: "`useEffect` is forbidden here; `useMemo` should suffice.",
     },
     schema: null,
     type: "problem",
