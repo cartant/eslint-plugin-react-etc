@@ -8,7 +8,7 @@ import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/prefer-usememo");
 import { ruleTester } from "../utils";
 
-ruleTester({ types: false }).run("prefer-usememo", rule, {
+const tests = {
   valid: [
     {
       code: stripIndent`
@@ -269,4 +269,13 @@ ruleTester({ types: false }).run("prefer-usememo", rule, {
       };
     `),
   ],
-});
+};
+
+ruleTester({
+  typeScript: true,
+  types: false,
+}).run("prefer-usememo (ts)", rule, tests);
+
+ruleTester({
+  typeScript: false,
+}).run("prefer-usememo (js)", rule, tests);
