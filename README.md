@@ -25,7 +25,7 @@ const { join } = require("path");
 module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     project: join(__dirname, "./tsconfig.json"),
     sourceType: "module"
   },
