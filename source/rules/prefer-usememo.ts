@@ -31,7 +31,7 @@ const rule = ruleCreator({
   },
   name: "prefer-usememo",
   create: (context) => {
-    // This rule uses a simplistic heuristic to determine whether or not a
+    // This rule uses a simple heuristic to determine whether or not a
     // useEffect hook should be replaced with a useMemo hook. A failure will be
     // effected if the useEffect hook:
     // - makes a single, clearly-synchronous, unconditional call to a single
