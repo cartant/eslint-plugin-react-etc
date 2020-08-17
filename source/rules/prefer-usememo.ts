@@ -22,11 +22,11 @@ const rule = ruleCreator({
       description: "Forbids `useEffect` when `useMemo` should suffice.",
       recommended: false,
     },
-    fixable: null,
+    fixable: undefined,
     messages: {
       forbidden: "`useEffect` is forbidden here; `useMemo` should suffice.",
     },
-    schema: null,
+    schema: [],
     type: "problem",
   },
   name: "prefer-usememo",
