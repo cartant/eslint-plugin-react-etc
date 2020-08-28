@@ -9,9 +9,7 @@
     "moduleResolution": "node",
     "noEmitHelpers": true,
     "outDir": "build",
-    "paths": {
-      "esquery": ["@types/esquery"]
-    },
+    "paths": {},
     "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": false,
