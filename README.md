@@ -8,9 +8,9 @@
 [![devDependency Status](https://img.shields.io/david/dev/cartant/eslint-plugin-react-etc.svg)](https://david-dm.org/cartant/eslint-plugin-react-etc#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/eslint-plugin-react-etc.svg)](https://david-dm.org/cartant/eslint-plugin-react-etc#info=peerDependencies)
 
-This repo is a WIP.
+This packages contains a bunch of ESLint rules - some of which will require the use of TypeScript - to highlight potential problems or poor practices in React.
 
-Eventually, it will contain a bunch of ESLint rules - some of which will require the use of TypeScript - to highlight potential problems or poor practices in React.
+Some of the rules are rather opinionated and are not included in the `recommended` configuration. Developers can decide for themselves whether they want to enable opinionated rules.
 
 # Install
 
