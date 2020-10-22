@@ -40,8 +40,23 @@ module.exports = {
   plugins: ["react-etc"],
   extends: [],
   rules: {
-    /* ... */
+    "react-etc/prefer-usememo": "error"
   }
+};
+```
+
+Or, using the `recommended` configuration:
+
+```js
+const { join } = require("path");
+module.exports = {
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 2019,
+    project: join(__dirname, "./tsconfig.json"),
+    sourceType: "module"
+  },
+  extends: ["plugin:react-etc/recommended"],
 };
 ```
 
@@ -51,4 +66,4 @@ The package includes the following rules:
 
 | Rule | Description | TS-only | Recommended |
 | --- | --- | --- | --- |
-| [`prefer-usememo`](https://github.com/cartant/eslint-plugin-react-etc/blob/main/source/rules/prefer-usememo.ts) | Forbids `useEffect` when `useMemo` should suffice. It's an implementation of the rule that Sophie Alpert mentioned in [this tweet](https://twitter.com/sophiebits/status/1293710971274289152). | No | TBD |
+| [`prefer-usememo`](https://github.com/cartant/eslint-plugin-react-etc/blob/main/docs/rules/prefer-usememo.md) | Forbids `useEffect` when `useMemo` should suffice. It's an implementation of the rule that Sophie Alpert mentioned in [this tweet](https://twitter.com/sophiebits/status/1293710971274289152). | No | Yes |

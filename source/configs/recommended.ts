@@ -3,5 +3,9 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-react-etc
  */
 
-module.exports.configs = require("requireindex")(`${__dirname}/configs`);
-module.exports.rules = require("requireindex")(`${__dirname}/rules`);
+export = {
+  plugins: ["react-etc"],
+  rules: {
+    "react-etc/prefer-usememo": "error",
+  },
+};
