@@ -8,7 +8,7 @@
 [![devDependency Status](https://img.shields.io/david/dev/cartant/eslint-plugin-react-etc.svg)](https://david-dm.org/cartant/eslint-plugin-react-etc#info=devDependencies)
 [![peerDependency Status](https://img.shields.io/david/peer/cartant/eslint-plugin-react-etc.svg)](https://david-dm.org/cartant/eslint-plugin-react-etc#info=peerDependencies)
 
-This packages will eventually contain a bunch of ESLint rules - some of which will require the use of TypeScript - to highlight potential problems or poor practices in React. As a starting point, there is a single rule - `prefer-usememo` - but you can expect more rules to be added in future releases, as I have a bunch of ideas that I want to explore.
+This package will eventually contain a bunch of ESLint rules - some of which will require the use of TypeScript - to highlight potential problems or poor practices in React. As a starting point, there is a single rule - `prefer-usememo` - but you can expect more rules to be added in future releases, as I have a bunch of ideas that I want to explore.
 
 Some of the rules are rather opinionated and are not included in the `recommended` configuration. Developers can decide for themselves whether they want to enable opinionated rules.
 
