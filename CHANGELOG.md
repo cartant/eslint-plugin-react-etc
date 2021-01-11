@@ -1,3 +1,10 @@
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.3...v1.0.4) (2021-01-11)
+
+## Changes
+
+* Fix GitHub URL to docs. ([7c75872](https://github.com/cartant/eslint-plugin-react-etc/commit/7c75872))
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.2...v1.0.3) (2020-11-28)
 
