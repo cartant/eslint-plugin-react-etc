@@ -112,8 +112,7 @@ const rule = ruleCreator({
           callee,
           referencedSetterCount,
         } = effectScope;
-        const { hasReturn } = functionScope;
-        if (hasReturn) {
+        if (functionScope?.hasReturn) {
           return;
         }
         if (calledSetterCount !== 1) {
@@ -131,7 +130,9 @@ const rule = ruleCreator({
 
     function enterReturnStatement() {
       const functionScope = currentScope(functionScopes);
-      functionScope.hasReturn = true;
+      if (functionScope) {
+        functionScope.hasReturn = true;
+      }
     }
 
     function enterUseEffect(node: es.CallExpression) {
@@ -168,7 +169,7 @@ const rule = ruleCreator({
         return;
       }
       const [, setter] = parent.id.elements;
-      if (!isIdentifier(setter)) {
+      if (!setter || !isIdentifier(setter)) {
         return;
       }
       const functionScope = currentScope(functionScopes);
