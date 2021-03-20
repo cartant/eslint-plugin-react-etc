@@ -1,3 +1,10 @@
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.4...v1.0.5) (2021-03-20)
+
+## Fixes
+
+* Use TypeScript `strict` option and fix related problems. ([12eca11](https://github.com/cartant/eslint-plugin-react-etc/commit/12eca11))
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.3...v1.0.4) (2021-01-11)
 
