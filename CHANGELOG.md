@@ -1,3 +1,10 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.6...v1.0.7) (2021-05-14)
+
+## Changes
+
+* Improve the failure message for the `prefer-usememo` rule. ([8b24fad](https://github.com/cartant/eslint-plugin-react-etc/commit/8b24fad))
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.5...v1.0.6) (2021-03-22)
 
