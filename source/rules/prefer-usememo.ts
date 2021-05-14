@@ -24,7 +24,8 @@ const rule = ruleCreator({
     },
     fixable: undefined,
     messages: {
-      forbidden: "`useEffect` is forbidden here; `useMemo` should suffice.",
+      forbidden:
+        "Side effects that perform only a set-state call are inefficient; `useMemo` would be a better choice.",
     },
     schema: [],
     type: "problem",
@@ -107,11 +108,8 @@ const rule = ruleCreator({
       const effectScope = currentScope(effectScopes);
       if (effectScope?.node === node) {
         effectScopes.pop();
-        const {
-          calledSetterCount,
-          callee,
-          referencedSetterCount,
-        } = effectScope;
+        const { calledSetterCount, callee, referencedSetterCount } =
+          effectScope;
         if (functionScope?.hasReturn) {
           return;
         }
@@ -244,8 +242,10 @@ const rule = ruleCreator({
     }
 
     return {
-      "ArrowFunctionExpression, FunctionDeclaration, FunctionExpression": enterFunction,
-      "ArrowFunctionExpression, FunctionDeclaration, FunctionExpression:exit": exitFunction,
+      "ArrowFunctionExpression, FunctionDeclaration, FunctionExpression":
+        enterFunction,
+      "ArrowFunctionExpression, FunctionDeclaration, FunctionExpression:exit":
+        exitFunction,
       ReturnStatement: enterReturnStatement,
       "CallExpression[callee.name='useEffect']": enterUseEffect,
       "CallExpression[callee.property.name='useEffect']": enterUseEffect,
