@@ -1,3 +1,10 @@
+<a name="1.1.0"></a>
+## [1.1.0](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.7...v1.1.0) (2021-06-14)
+
+## Features
+
+* Added a `no-unstable-context-selector` rule. ([cee3e27](https://github.com/cartant/eslint-plugin-react-etc/commit/cee3e27))
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.0.6...v1.0.7) (2021-05-14)
 
