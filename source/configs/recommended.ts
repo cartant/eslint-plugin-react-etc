@@ -6,6 +6,7 @@
 export = {
   plugins: ["react-etc"],
   rules: {
+    "react-etc/no-unstable-context-selector": "error",
     "react-etc/prefer-usememo": "error",
   },
 };

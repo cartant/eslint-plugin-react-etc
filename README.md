@@ -67,3 +67,4 @@ The package includes the following rules:
 | Rule | Description | TS-only | Recommended |
 | --- | --- | --- | --- |
 | [`prefer-usememo`](https://github.com/cartant/eslint-plugin-react-etc/blob/main/docs/rules/prefer-usememo.md) | Forbids `useEffect` when `useMemo` should suffice. It's an implementation of the rule that Sophie Alpert mentioned in [this tweet](https://twitter.com/sophiebits/status/1293710971274289152). | No | Yes |
+| [`no-unstable-context-selector`](https://github.com/cartant/eslint-plugin-react-etc/blob/main/docs/rules/no-unstable-context-selector.md) | Forbids passing functions that return unstable values to `useContextSelector`. | No | Yes |
