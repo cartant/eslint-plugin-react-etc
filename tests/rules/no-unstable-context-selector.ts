@@ -3,12 +3,16 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-react-etc
  */
 
+import { TSESLint as eslint } from "@typescript-eslint/experimental-utils";
 import { stripIndent } from "common-tags";
 import { fromFixture } from "eslint-etc";
 import rule = require("../../source/rules/no-unstable-context-selector");
 import { ruleTester } from "../utils";
 
-const tests = {
+const tests: {
+  valid: eslint.ValidTestCase<never>[];
+  invalid: eslint.InvalidTestCase<"forbidden", never>[];
+} = {
   valid: [
     {
       code: stripIndent`
