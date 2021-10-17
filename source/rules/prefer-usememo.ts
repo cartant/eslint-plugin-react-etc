@@ -18,11 +18,11 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description: "Forbids `useEffect` when `useMemo` should suffice.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden:
         "Side effects that perform only a set-state call are inefficient; `useMemo` would be a better choice.",

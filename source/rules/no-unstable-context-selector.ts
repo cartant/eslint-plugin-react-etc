@@ -34,12 +34,12 @@ const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
-      category: "Best Practices",
       description:
         "Forbids passing functions that return unstable values to `useContextSelector`.",
       recommended: false,
     },
     fixable: undefined,
+    hasSuggestions: false,
     messages: {
       forbidden:
         "Unstable context selectors are forbidden. Avoid creating objects or arrays within selectors.",
