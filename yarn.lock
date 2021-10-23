@@ -152,9 +152,9 @@
   integrity sha512-scN0hAWyLVAvLR9AyW7HoFF5sJZglyBsbPuHO4fv7JRvfmPBMfp1ozWqOf/e4wwPNxezBZXRfWzMb6iFLgEVRA==
 
 "@types/node@^16.0.0":
-  version "16.11.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.3.tgz#fad0b069ec205b0e81429c805d306d2c12e26be1"
-  integrity sha512-aIYL9Eemcecs1y77XzFGiSc+FdfN58k4J23UEe6+hynf4Wd9g4DzQPwIKL080vSMuubFqy2hWwOzCtJdc6vFKw==
+  version "16.11.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.4.tgz#90771124822d6663814f7c1c9b45a6654d8fd964"
+  integrity sha512-TMgXmy0v2xWyuCSCJM6NCna2snndD8yvQF67J29ipdzMcsPa9u+o0tjF5+EQNdhcuZplYuouYqpc4zcd5I6amQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -791,9 +791,9 @@ eslint-visitor-keys@^3.0.0:
   integrity sha512-mJOZa35trBTb3IyRmo8xmKBZlxf+N7OnUl4+ZhJHs/r+0770Wh/LEACE2pqMGMe27G/4y8P2bYGk4J70IC5k1Q==
 
 eslint@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.0.1.tgz#3610e7fe4a05c2154669515ca60835a76a19f700"
-  integrity sha512-LsgcwZgQ72vZ+SMp4K6pAnk2yFDWL7Ti4pJaRvsZ0Hsw2h8ZjUIW38a9AFn2cZXdBMlScMFYYgsSp4ttFI/0bA==
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.1.0.tgz#00f1f7dbf4134f26588e6c9f2efe970760f64664"
+  integrity sha512-JZvNneArGSUsluHWJ8g8MMs3CfIEzwaLx9KyH4tZ2i+R2/rPWzL8c0zg3rHdwYVpN/1sB9gqnjHwz9HoeJpGHw==
   dependencies:
     "@eslint/eslintrc" "^1.0.3"
     "@humanwhocodes/config-array" "^0.6.0"
@@ -2019,9 +2019,9 @@ to-regex-range@^5.0.1:
     is-number "^7.0.0"
 
 ts-node@^10.0.0:
-  version "10.3.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.3.1.tgz#739b42839b56d1a3c85026994af7045b2fccc6f5"
-  integrity sha512-Yw3W2mYzhHfCHOICGNJqa0i+rbL0rAyg7ZIHxU+K4pgY8gd2Lh1j+XbHCusJMykbj6RZMJVOY0MlHVd+GOivcw==
+  version "10.4.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.4.0.tgz#680f88945885f4e6cf450e7f0d6223dd404895f7"
+  integrity sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==
   dependencies:
     "@cspotcode/source-map-support" "0.7.0"
     "@tsconfig/node10" "^1.0.7"
