@@ -1,3 +1,10 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/cartant/eslint-plugin-react-etc/compare/v2.0.0...v2.0.1) (2023-05-10)
+
+## Changes
+
+* Widen the TypeScript peer dependency. ([df3fb61](https://github.com/cartant/eslint-plugin-react-etc/commit/df3fb61))
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/cartant/eslint-plugin-react-etc/compare/v1.1.0...v2.0.0) (2021-10-17)
 
